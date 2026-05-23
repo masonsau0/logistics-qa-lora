@@ -1,0 +1,33 @@
+# Core ML stack — these versions are known to work together as of 2026 H1.
+# Install with: pip install -r requirements.txt
+#
+# For GPU users, see README for the correct torch install command (CUDA wheels).
+# The CPU/default torch wheel works for the FastAPI server with USE_MOCK=true
+# and for running tests in CI.
+
+torch>=2.3.0
+transformers>=4.45.0
+peft>=0.13.0
+trl>=0.11.0
+accelerate>=0.34.0
+datasets>=3.0.0
+bitsandbytes>=0.43.0 ; sys_platform == "linux"   # GPU quantization (Linux only)
+
+# Logging / experiment tracking
+wandb>=0.18.0
+
+# Inference server
+fastapi>=0.115.0
+uvicorn[standard]>=0.30.0
+pydantic>=2.8.0
+sse-starlette>=2.1.0
+
+# Dataset generation
+anthropic>=0.39.0
+python-dotenv>=1.0.0
+
+# Dev / test
+pytest>=8.0.0
+pytest-asyncio>=0.24.0
+ruff>=0.6.0
+httpx>=0.27.0           # required by fastapi TestClient

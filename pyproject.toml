@@ -1,0 +1,68 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "logistics-qa-lora"
+version = "0.1.0"
+description = "LoRA fine-tuning of Qwen 2.5-7B-Instruct for logistics & supply-chain Q&A."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Mason Au" }]
+keywords = ["llm", "lora", "fine-tuning", "qwen", "logistics", "supply-chain"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+[tool.setuptools.packages.find]
+include = ["src*", "server*", "data*"]
+
+# ---------- Ruff (linting + formatting) ----------
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = [
+    "E", "F", "W",   # pyflakes / pycodestyle
+    "I",             # isort
+    "B",             # bugbear
+    "UP",            # pyupgrade
+    "SIM",           # simplify
+    "PL",            # pylint subset
+]
+ignore = [
+    "E501",          # line too long — handled by formatter
+    "PLR0913",       # too many arguments — fine for argparse / config classes
+    "PLR2004",       # magic value comparisons — common in tests
+    "B008",          # function call in argument defaults — needed for Field(...)
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["PLR2004", "B011", "PLC0415"]
+# Lazy import in lifespan keeps the FastAPI app importable without torch installed.
+"server/app.py" = ["PLC0415"]
+# Lazy LogisticsQA import keeps the metrics module testable without torch.
+"src/evaluate.py" = ["PLC0415"]
+# Lazy `from anthropic import Anthropic` for friendly error message; main() is a
+# CLI orchestrator and naturally exceeds default complexity thresholds.
+"data/prepare_dataset.py" = ["PLC0415", "PLR0912", "PLR0915"]
+# Notebooks open files for one-shot reads; context managers add ceremony.
+"notebooks/*" = ["SIM115"]
+
+# ---------- Pytest ----------
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+addopts = "-ra --strict-markers"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
