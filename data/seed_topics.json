@@ -1,0 +1,88 @@
+{
+  "categories": {
+    "freight_calculations": {
+      "description": "Numerical and procedural questions about freight pricing, fuel surcharges, dimensional weight, freight class, accessorial charges, and cost-per-mile.",
+      "example_question": "How is dimensional weight calculated for a less-than-truckload (LTL) shipment in the United States?",
+      "subtopics": [
+        "dimensional weight (DIM) calculation",
+        "freight class (NMFC) determination",
+        "fuel surcharge calculation",
+        "cost-per-mile for refrigerated vs dry van",
+        "accessorial charges (liftgate, residential, inside delivery)",
+        "LTL vs FTL pricing thresholds",
+        "minimum charge and tariff bases",
+        "drayage and intermodal pricing"
+      ]
+    },
+    "carrier_performance": {
+      "description": "Questions about measuring and managing carrier performance: on-time delivery, claims rate, tender acceptance, scorecards, and capacity allocation.",
+      "example_question": "What KPIs belong on a carrier scorecard, and how should each be weighted?",
+      "subtopics": [
+        "on-time pickup and delivery (OTP / OTD)",
+        "tender acceptance rate",
+        "claims-to-shipment ratio",
+        "cost-per-mile benchmarking",
+        "scorecard weighting and tier structures",
+        "underperforming carrier remediation",
+        "capacity allocation across primary and backup carriers",
+        "carrier qualification and onboarding criteria"
+      ]
+    },
+    "claims_and_damages": {
+      "description": "Freight claim filing, valuation, and dispute processes; cargo insurance; Carmack Amendment liability.",
+      "example_question": "What documents are required to file a concealed damage claim, and what is the typical filing deadline?",
+      "subtopics": [
+        "Carmack Amendment carrier liability",
+        "concealed damage claims",
+        "filing deadlines (9 months under 49 CFR)",
+        "freight claim valuation methods (invoice cost, replacement, depreciated)",
+        "released value vs full value protection",
+        "salvage rights and obligations",
+        "claim documentation (BOL, POD, photos, repair estimates)",
+        "cargo insurance vs carrier liability"
+      ]
+    },
+    "routing_and_dispatch": {
+      "description": "Route planning, dispatch decisions, hours-of-service constraints, multi-stop optimization, and zone skipping.",
+      "example_question": "How do hours-of-service rules constrain a driver's daily routing options?",
+      "subtopics": [
+        "hours-of-service (HOS) 11/14/70 rules",
+        "split-sleeper berth provisions",
+        "multi-stop route sequencing",
+        "deadhead minimization",
+        "appointment scheduling and dock dwell",
+        "zone skipping for parcel networks",
+        "backhaul matching",
+        "weather and traffic re-routing"
+      ]
+    },
+    "sops_and_procedures": {
+      "description": "Warehouse and dock standard operating procedures: receiving, putaway, pick-pack-ship, loading, and cycle counts.",
+      "example_question": "What are the steps in a standard inbound receiving SOP for a palletized shipment?",
+      "subtopics": [
+        "inbound receiving and discrepancy handling",
+        "putaway strategies (random, fixed-slot, ABC)",
+        "pick-pack-ship workflows",
+        "loading sequence and load planning",
+        "cycle count vs full physical inventory",
+        "lot and serial tracking",
+        "yard management and trailer pools",
+        "shift handoff and scorecards"
+      ]
+    },
+    "regulations_and_compliance": {
+      "description": "FMCSA regulations, DOT compliance, customs and cross-border, hazmat, and security programs (C-TPAT, CSA).",
+      "example_question": "What is the difference between C-TPAT and CSA, and which shippers benefit from each?",
+      "subtopics": [
+        "FMCSA Compliance Safety Accountability (CSA) BASICs",
+        "ELD mandate and exceptions",
+        "hazmat placarding and HM-181",
+        "customs brokerage and HTS classification",
+        "C-TPAT and AEO mutual recognition",
+        "import security filing (10+2 ISF)",
+        "DOT drug and alcohol testing program",
+        "weight limits and oversize permits"
+      ]
+    }
+  }
+}
