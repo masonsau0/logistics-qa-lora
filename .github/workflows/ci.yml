@@ -29,13 +29,16 @@ jobs:
         # Lean install — the real model needs torch+transformers+peft+bnb (several GB
         # and a GPU). CI exercises the FastAPI server, request validation, and the
         # metrics (token_f1, keyword_em) via the mock backend, all of which run CPU-only.
+        # datasets is needed because src/dataset.py imports it at module level (which
+        # transitively gets pulled in by test_server.py importing src.evaluate).
         run: |
           python -m pip install --upgrade pip
           pip install \
             pytest pytest-asyncio ruff \
             fastapi pydantic httpx \
             uvicorn[standard] sse-starlette \
-            anthropic python-dotenv
+            anthropic python-dotenv \
+            datasets
 
       - name: Lint
         run: ruff check .
