@@ -22,6 +22,10 @@ uvicorn[standard]>=0.30.0
 pydantic>=2.8.0
 sse-starlette>=2.1.0
 
+# Demo UI (ui/app.py). Talks to the FastAPI server over HTTP, so it doesn't
+# need any of the ML stack installed where you run streamlit.
+streamlit>=1.38.0
+
 # Dataset generation
 anthropic>=0.39.0
 python-dotenv>=1.0.0

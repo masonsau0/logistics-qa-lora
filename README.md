@@ -143,6 +143,19 @@ curl -N -X POST localhost:8000/generate/stream \
   -d '{"question": "Explain Carmack liability."}'
 ```
 
+### 5. Streamlit demo
+
+```bash
+# In a second terminal, with the server running:
+streamlit run ui/app.py
+```
+
+Opens in the browser at `localhost:8501`. Picks one of the sample logistics
+questions, streams the answer from `/generate/stream` token-by-token, and shows
+a badge for whether the live backend is the fine-tuned adapter (🟢) or the
+mock (🟡). Point `SERVER_URL` at a deployed instance (Cloud Run / HF Spaces)
+to demo against production.
+
 ## Configuration
 
 Everything tunable lives in [`src/config.py`](src/config.py). The most-changed knobs:
