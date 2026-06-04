@@ -73,6 +73,12 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Resume from the latest checkpoint in --output-dir if one exists",
     )
+    p.add_argument(
+        "--save-steps",
+        type=int,
+        default=TRAIN.save_steps,
+        help="Save a checkpoint every N steps (lower = more recovery points, more disk IO)",
+    )
     return p.parse_args()
 
 
@@ -191,7 +197,7 @@ def main() -> int:
         eval_strategy=TRAIN.eval_strategy,
         eval_steps=TRAIN.eval_steps,
         save_strategy=TRAIN.save_strategy,
-        save_steps=TRAIN.save_steps,
+        save_steps=args.save_steps,
         save_total_limit=TRAIN.save_total_limit,
         gradient_checkpointing=TRAIN.gradient_checkpointing,
         optim=TRAIN.optim,
