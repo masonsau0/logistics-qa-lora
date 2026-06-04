@@ -68,6 +68,11 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--output-dir", default=TRAIN.output_dir)
     p.add_argument("--no-wandb", action="store_true", help="Disable W&B logging")
     p.add_argument("--seed", type=int, default=TRAIN.seed)
+    p.add_argument(
+        "--resume",
+        action="store_true",
+        help="Resume from the latest checkpoint in --output-dir if one exists",
+    )
     return p.parse_args()
 
 
@@ -212,7 +217,16 @@ def main() -> int:
         args.batch_size * args.grad_accum,
         args.lr,
     )
-    trainer.train()
+
+    resume_path = None
+    if args.resume:
+        existing = sorted(output_dir.glob("checkpoint-*"), key=lambda p: int(p.name.split("-")[1]))
+        if existing:
+            resume_path = str(existing[-1])
+            logger.info("Resuming from checkpoint: %s", resume_path)
+        else:
+            logger.info("--resume passed but no checkpoint found; starting fresh")
+    trainer.train(resume_from_checkpoint=resume_path)
 
     final_dir = output_dir / "final"
     logger.info("Saving final adapter to %s", final_dir)
