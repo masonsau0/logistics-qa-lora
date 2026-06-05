@@ -79,6 +79,12 @@ def parse_args() -> argparse.Namespace:
         default=TRAIN.save_steps,
         help="Save a checkpoint every N steps (lower = more recovery points, more disk IO)",
     )
+    p.add_argument(
+        "--max-steps",
+        type=int,
+        default=-1,
+        help="Stop after N training steps regardless of epochs (use for quick smoke tests)",
+    )
     return p.parse_args()
 
 
@@ -198,6 +204,7 @@ def main() -> int:
         eval_steps=TRAIN.eval_steps,
         save_strategy=TRAIN.save_strategy,
         save_steps=args.save_steps,
+        max_steps=args.max_steps,
         save_total_limit=TRAIN.save_total_limit,
         gradient_checkpointing=TRAIN.gradient_checkpointing,
         optim=TRAIN.optim,
