@@ -85,6 +85,11 @@ def parse_args() -> argparse.Namespace:
         default=-1,
         help="Stop after N training steps regardless of epochs (use for quick smoke tests)",
     )
+    p.add_argument(
+        "--no-eval",
+        action="store_true",
+        help="Skip evaluation during training (saves memory + time; eval lives in notebook 03)",
+    )
     return p.parse_args()
 
 
@@ -103,7 +108,14 @@ def load_model_and_tokenizer(args: argparse.Namespace):
 
     # Decide precision + quantization.
     use_4bit = not args.no_4bit
-    bf16_ok = torch.cuda.is_available() and torch.cuda.is_bf16_supported()
+    # bf16 only on Ampere+ (compute capability >= 8.0). T4 (7.5) reports
+    # is_bf16_supported() == True via CUDA emulation but actually has no native
+    # bf16 tensor cores — using bf16 there makes training 3-5x slower than fp16.
+    bf16_ok = (
+        torch.cuda.is_available()
+        and torch.cuda.is_bf16_supported()
+        and torch.cuda.get_device_capability()[0] >= 8
+    )
     compute_dtype = torch.bfloat16 if bf16_ok else torch.float16
 
     bnb_config = None
@@ -200,7 +212,7 @@ def main() -> int:
         lr_scheduler_type=TRAIN.lr_scheduler_type,
         weight_decay=TRAIN.weight_decay,
         logging_steps=TRAIN.logging_steps,
-        eval_strategy=TRAIN.eval_strategy,
+        eval_strategy="no" if args.no_eval else TRAIN.eval_strategy,
         eval_steps=TRAIN.eval_steps,
         save_strategy=TRAIN.save_strategy,
         save_steps=args.save_steps,
@@ -219,7 +231,7 @@ def main() -> int:
         model=model,
         args=training_args,
         train_dataset=train_tok,
-        eval_dataset=val_tok,
+        eval_dataset=None if args.no_eval else val_tok,
         data_collator=collator,
         processing_class=tokenizer,
     )
