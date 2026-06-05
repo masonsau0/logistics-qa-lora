@@ -32,7 +32,7 @@ class ModelConfig:
     model-agnostic as long as the model supports the standard chat template.
     """
 
-    name: str = "Qwen/Qwen2.5-7B-Instruct"
+    name: str = "Qwen/Qwen2.5-1.5B-Instruct"
     # Use 4-bit quantization (QLoRA). Required to fit 7B on a Colab T4 (16 GB).
     # Set to False if you have an A100 / H100 and want full-precision LoRA.
     load_in_4bit: bool = True
