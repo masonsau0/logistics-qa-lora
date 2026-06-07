@@ -56,7 +56,14 @@ class LogisticsQA:
         if self.tokenizer.pad_token is None:
             self.tokenizer.pad_token = self.tokenizer.eos_token
 
-        bf16_ok = torch.cuda.is_available() and torch.cuda.is_bf16_supported()
+        # bf16 only on Ampere+ (compute capability >= 8.0). T4 (7.5) reports
+        # is_bf16_supported() == True via CUDA emulation but actually has no native
+        # bf16 tensor cores — using bf16 there makes inference 3-5x slower than fp16.
+        bf16_ok = (
+            torch.cuda.is_available()
+            and torch.cuda.is_bf16_supported()
+            and torch.cuda.get_device_capability()[0] >= 8
+        )
         compute_dtype = torch.bfloat16 if bf16_ok else torch.float16
 
         bnb_config = None
