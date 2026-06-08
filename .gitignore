@@ -10,6 +10,11 @@ credentials.json
 
 # ---- Generated artifacts ----
 artifacts/
+# ...except evaluation results (small JSON + plot used in the README).
+!artifacts/
+!artifacts/results/
+!artifacts/results/*.json
+!artifacts/results/*.png
 checkpoints/
 wandb/
 runs/
