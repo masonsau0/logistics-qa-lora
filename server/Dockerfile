@@ -3,7 +3,7 @@
 # Build:
 #   docker build -t logistics-qa-lora:latest .
 #
-# Run (CPU / mock backend — for CI and local dev):
+# Run (CPU / mock backend - for CI and local dev):
 #   docker run -p 8000:8000 -e USE_MOCK=true logistics-qa-lora:latest
 #
 # Run (GPU + real adapter):
@@ -38,7 +38,7 @@ ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     PATH="/opt/venv/bin:$PATH"
 
-# Non-root user — best practice; the container has no business running as root.
+# Non-root user - best practice; the container has no business running as root.
 RUN groupadd -r app && useradd -r -g app -d /app -s /bin/bash app
 
 WORKDIR /app
@@ -51,6 +51,6 @@ USER app
 
 EXPOSE 8000
 
-# Single worker — each uvicorn worker would load its own copy of the model into
+# Single worker - each uvicorn worker would load its own copy of the model into
 # VRAM. For a 7B model on a single GPU, workers=1 is the right call.
 CMD ["uvicorn", "server.app:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "1"]

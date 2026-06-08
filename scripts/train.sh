@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Train the LoRA adapter. Defaults are tuned for a Colab T4 (16 GB VRAM)
-# with QLoRA. Override any flag — they all forward to src/train.py.
+# with QLoRA. Override any flag - they all forward to src/train.py.
 #
 # Usage:
 #   ./scripts/train.sh                       # default 3-epoch run

@@ -26,7 +26,7 @@ jobs:
           cache: pip
 
       - name: Install test deps
-        # Lean install — the real model needs torch+transformers+peft+bnb (several GB
+        # Lean install - the real model needs torch+transformers+peft+bnb (several GB
         # and a GPU). CI exercises the FastAPI server, request validation, and the
         # metrics (token_f1, keyword_em) via the mock backend, all of which run CPU-only.
         # datasets is needed because src/dataset.py imports it at module level (which

@@ -1,4 +1,4 @@
-# Core ML stack — these versions are known to work together as of 2026 H1.
+# Core ML stack - these versions are known to work together as of 2026 H1.
 # Install with: pip install -r requirements.txt
 #
 # For GPU users, see README for the correct torch install command (CUDA wheels).

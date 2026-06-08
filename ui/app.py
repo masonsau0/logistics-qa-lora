@@ -28,8 +28,8 @@ import streamlit as st
 SERVER_URL = os.environ.get("SERVER_URL", "http://localhost:8000")
 
 
-st.set_page_config(page_title="Logistics QA — LoRA Qwen 2.5", page_icon="🚚", layout="wide")
-st.title("Logistics QA — LoRA fine-tuned Qwen 2.5")
+st.set_page_config(page_title="Logistics QA - LoRA Qwen 2.5", page_icon="🚚", layout="wide")
+st.title("Logistics QA - LoRA fine-tuned Qwen 2.5")
 st.markdown(
     "**A 7B model QLoRA-fine-tuned on a 12K-example synthetic Q&A dataset covering "
     "freight, claims, routing, SOPs, and FMCSA / customs compliance.**"
@@ -76,7 +76,7 @@ try:
         body = health.json()
         backend = body.get("backend", "?")
         with col_left:
-            st.success(f"✓ Server reachable — backend: {backend}")
+            st.success(f"✓ Server reachable - backend: {backend}")
         with col_right:
             badge = "🟢 fine-tuned" if backend == "model" else "🟡 mock"
             st.markdown(

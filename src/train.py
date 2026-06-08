@@ -8,12 +8,12 @@ Usage (from repo root):
     python -m src.train --no-wandb                   # disable W&B logging
 
 Outputs:
-    artifacts/checkpoints/   — intermediate + final LoRA adapter
-    W&B run                  — losses, eval metrics, hyperparameters
+    artifacts/checkpoints/   - intermediate + final LoRA adapter
+    W&B run                  - losses, eval metrics, hyperparameters
 
 Memory expectations (Qwen2.5-7B-Instruct, batch=4, seq=1024):
-    QLoRA (4-bit):  ~10 GB VRAM   — fits on Colab T4 (16 GB)
-    LoRA (bf16):    ~22 GB VRAM   — needs A100 / A10 / RTX 3090+
+    QLoRA (4-bit):  ~10 GB VRAM   - fits on Colab T4 (16 GB)
+    LoRA (bf16):    ~22 GB VRAM   - needs A100 / A10 / RTX 3090+
 """
 
 from __future__ import annotations
@@ -110,7 +110,7 @@ def load_model_and_tokenizer(args: argparse.Namespace):
     use_4bit = not args.no_4bit
     # bf16 only on Ampere+ (compute capability >= 8.0). T4 (7.5) reports
     # is_bf16_supported() == True via CUDA emulation but actually has no native
-    # bf16 tensor cores — using bf16 there makes training 3-5x slower than fp16.
+    # bf16 tensor cores - using bf16 there makes training 3-5x slower than fp16.
     bf16_ok = (
         torch.cuda.is_available()
         and torch.cuda.is_bf16_supported()
@@ -172,7 +172,7 @@ def main() -> int:
     else:
         if not os.environ.get("WANDB_API_KEY"):
             logger.warning(
-                "WANDB_API_KEY not set — W&B logging will fail. Use --no-wandb to disable."
+                "WANDB_API_KEY not set - W&B logging will fail. Use --no-wandb to disable."
             )
         os.environ.setdefault("WANDB_PROJECT", TRAIN.wandb_project)
         report_to = TRAIN.report_to

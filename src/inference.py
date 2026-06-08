@@ -8,7 +8,7 @@ Two entry points:
 
 The model is loaded once at construction; subsequent `.answer(...)` calls
 reuse it. For multi-process serving (e.g. uvicorn workers > 1), each worker
-gets its own model copy — that's expensive in VRAM. Use workers=1 for GPU.
+gets its own model copy - that's expensive in VRAM. Use workers=1 for GPU.
 """
 
 from __future__ import annotations
@@ -39,7 +39,7 @@ class LogisticsQA:
     Args:
         base_model_name: HF model id of the base (e.g. "Qwen/Qwen2.5-7B-Instruct").
         adapter_path: Path to a directory containing the LoRA adapter (saved by
-            train.py). If None, runs against the base model — useful as the
+            train.py). If None, runs against the base model - useful as the
             baseline comparison in evaluation.
         load_in_4bit: Use 4-bit quantization at inference. Default True; matches
             training-time quantization and fits 7B models on a T4.
@@ -58,7 +58,7 @@ class LogisticsQA:
 
         # bf16 only on Ampere+ (compute capability >= 8.0). T4 (7.5) reports
         # is_bf16_supported() == True via CUDA emulation but actually has no native
-        # bf16 tensor cores — using bf16 there makes inference 3-5x slower than fp16.
+        # bf16 tensor cores - using bf16 there makes inference 3-5x slower than fp16.
         bf16_ok = (
             torch.cuda.is_available()
             and torch.cuda.is_bf16_supported()

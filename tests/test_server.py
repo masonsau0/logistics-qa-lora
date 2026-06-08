@@ -1,7 +1,7 @@
 """Tests for evaluation metrics and the FastAPI server (using the mock backend).
 
-The mock backend lets us exercise the full HTTP stack — request validation,
-streaming, error handling — without loading any model or needing a GPU.
+The mock backend lets us exercise the full HTTP stack - request validation,
+streaming, error handling - without loading any model or needing a GPU.
 """
 
 from __future__ import annotations

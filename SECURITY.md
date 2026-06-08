@@ -1,7 +1,7 @@
 # Security Notes
 
 This project requires API keys (Anthropic, optionally Hugging Face and Weights
-& Biases). Treat them with the same care as a password — leaking one to a
+& Biases). Treat them with the same care as a password - leaking one to a
 public GitHub repo can result in a multi-thousand-dollar bill within hours.
 
 ## Before you push the repo public
@@ -15,7 +15,7 @@ public GitHub repo can result in a multi-thousand-dollar bill within hours.
    `logistics-qa-lora` rather than reusing a key you already have. If it
    leaks, you rotate one thing, not your whole life.
 
-3. **Confirm `.env` is gitignored.** Run `git check-ignore .env` — it should
+3. **Confirm `.env` is gitignored.** Run `git check-ignore .env` - it should
    print `.env`. If it doesn't, `.env` will be committed.
 
 4. **Install the pre-commit hook.**
@@ -45,7 +45,7 @@ datasets, and W&B local caches. See `.gitignore` for the full list.
 3. **Update your local `.env`** with the new key.
 4. **If the leak was in the most recent commit**, `git filter-repo --invert-paths --path .env` or just delete and re-initialize the repo if it's small.
 5. **Check the provider's usage dashboard** for any unfamiliar activity, and
-   open a support ticket if there is any — providers often forgive charges
+   open a support ticket if there is any - providers often forgive charges
    resulting from a leaked key if you report it promptly.
 
 ## Server deployment
@@ -56,7 +56,7 @@ For portfolio purposes, run it locally. If you must deploy it publicly:
 
 - Put it behind authentication (an API gateway, Cloudflare Access, or even
   basic auth as a stopgap).
-- Add rate limiting (e.g. `slowapi`) — without it, a single client can burn
+- Add rate limiting (e.g. `slowapi`) - without it, a single client can burn
   through your GPU budget.
 - Set `USE_MOCK=true` for any public demo where you don't want real model
   costs.

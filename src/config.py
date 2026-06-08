@@ -28,7 +28,7 @@ class ModelConfig:
     """Base model selection.
 
     Qwen2.5-7B-Instruct is Apache-2.0 licensed and downloadable from Hugging Face
-    without gating. Swap `name` to target a different model — the code path is
+    without gating. Swap `name` to target a different model - the code path is
     model-agnostic as long as the model supports the standard chat template.
     """
 
@@ -49,7 +49,7 @@ class ModelConfig:
 class LoraConfig:
     """LoRA adapter hyperparameters.
 
-    r=16, alpha=32 is the standard "balanced" config — a good default for 7B
+    r=16, alpha=32 is the standard "balanced" config - a good default for 7B
     models on instruction-style data. Increase r for more capacity (and slower
     training); decrease for cheaper runs.
     """
@@ -115,7 +115,7 @@ class DatasetConfig:
     train_path: str = str(DATA_DIR / "train.jsonl")
     val_path: str = str(DATA_DIR / "val.jsonl")
     test_path: str = str(DATA_DIR / "test.jsonl")
-    # Generation target — used by data/prepare_dataset.py.
+    # Generation target - used by data/prepare_dataset.py.
     target_total_examples: int = 12_000
     val_fraction: float = 0.05
     test_fraction: float = 0.05
@@ -141,13 +141,13 @@ class GenerationConfig:
     """Inference-time generation settings."""
 
     max_new_tokens: int = 512
-    temperature: float = 0.3  # low — domain Q&A benefits from determinism
+    temperature: float = 0.3  # low - domain Q&A benefits from determinism
     top_p: float = 0.9
     repetition_penalty: float = 1.05
     do_sample: bool = True
 
 
-# Singletons — import these for convenience.
+# Singletons - import these for convenience.
 MODEL = ModelConfig()
 LORA = LoraConfig()
 TRAIN = TrainConfig()

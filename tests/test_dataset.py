@@ -1,6 +1,6 @@
 """Unit tests for src/dataset.py.
 
-These tests don't require a GPU or any downloaded model — they use a tiny
+These tests don't require a GPU or any downloaded model - they use a tiny
 in-memory fake tokenizer to verify the masking and IO logic.
 """
 
@@ -79,7 +79,7 @@ def test_format_for_sft_masks_prompt_tokens(tok):
     n_masked = sum(1 for lbl in out["labels"] if lbl == -100)
     n_kept = sum(1 for lbl in out["labels"] if lbl != -100)
     assert n_masked > 0, "no prompt tokens were masked"
-    assert n_kept > 0, "all tokens were masked — no answer remained"
+    assert n_kept > 0, "all tokens were masked - no answer remained"
 
     # The masked prefix should appear first and the kept suffix last.
     first_kept = next(i for i, lbl in enumerate(out["labels"]) if lbl != -100)

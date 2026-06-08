@@ -4,7 +4,7 @@ Computes three metrics on the held-out test set:
 
   1. Exact-match (EM): does the model's answer contain all the required
      key facts from the reference? Implemented as a "normalized keyword
-     containment" check — exact string match is too strict for free-text
+     containment" check - exact string match is too strict for free-text
      answers, so we extract key facts at dataset-generation time and check
      for their presence here.
 
@@ -176,7 +176,7 @@ def parse_args() -> argparse.Namespace:
 
 
 def main() -> int:
-    # Lazy import — keeps the metrics-only API testable without torch installed.
+    # Lazy import - keeps the metrics-only API testable without torch installed.
     from src.inference import LogisticsQA
 
     args = parse_args()

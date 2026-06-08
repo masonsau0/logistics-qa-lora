@@ -2,7 +2,7 @@
 # After that, every `git commit` runs these checks and refuses bad commits.
 
 repos:
-  # Secret detection — refuses commits that contain anything resembling an API key.
+  # Secret detection - refuses commits that contain anything resembling an API key.
   - repo: https://github.com/gitleaks/gitleaks
     rev: v8.21.2
     hooks:

@@ -68,7 +68,7 @@ Aim for variety across these subtopics:
 {subtopics_list}
 
 REQUIREMENTS for each pair:
-  - Questions must be realistic — the kind an analyst, dispatcher, or ops
+  - Questions must be realistic - the kind an analyst, dispatcher, or ops
     manager would actually ask. Mix easy and hard. Avoid yes/no questions.
   - Answers must be factually correct, specific, and concise (60–250 words).
     Include numbers, regulations, and named methods where relevant.
@@ -141,7 +141,7 @@ def call_model_with_retry(client, model: str, prompt: str, max_retries: int = 5)
             )
             # Concatenate text blocks (Anthropic response is a list of content blocks).
             return "".join(b.text for b in response.content if hasattr(b, "text"))
-        except Exception as e:  # noqa: BLE001 — we want to catch anything transient
+        except Exception as e:  # noqa: BLE001 - we want to catch anything transient
             last_err = e
             msg = str(e).lower()
             transient = any(
@@ -318,7 +318,7 @@ def main() -> int:
                     response_text = call_model_with_retry(client, args.model, prompt)
                     items = parse_response(response_text, batch)
                 except Exception as e:  # noqa: BLE001
-                    logger.error("[%s] batch failed: %s — continuing", cat, e)
+                    logger.error("[%s] batch failed: %s - continuing", cat, e)
                     continue
 
                 added_this_batch = 0

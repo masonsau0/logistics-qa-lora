@@ -1,15 +1,15 @@
 """FastAPI inference server.
 
 Endpoints:
-  GET  /health        — liveness check
-  POST /generate      — non-streaming generation
-  POST /generate/stream — server-sent-events streaming
+  GET  /health        - liveness check
+  POST /generate      - non-streaming generation
+  POST /generate/stream - server-sent-events streaming
 
 Environment variables:
-  ADAPTER_PATH        — directory with the trained LoRA adapter (default: artifacts/checkpoints/final)
-  BASE_MODEL          — base HF model id (default: from src/config.py)
-  LOAD_IN_4BIT        — "true" or "false" (default: true)
-  USE_MOCK            — "true" returns canned responses; useful for CI / local dev (default: false)
+  ADAPTER_PATH        - directory with the trained LoRA adapter (default: artifacts/checkpoints/final)
+  BASE_MODEL          - base HF model id (default: from src/config.py)
+  LOAD_IN_4BIT        - "true" or "false" (default: true)
+  USE_MOCK            - "true" returns canned responses; useful for CI / local dev (default: false)
 
 Start:
   uvicorn server.app:app --host 0.0.0.0 --port 8000 --workers 1
@@ -65,10 +65,10 @@ state = AppState()
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     use_mock = os.environ.get("USE_MOCK", "false").lower() == "true"
     if use_mock:
-        logger.info("USE_MOCK=true — loading MockQA backend")
+        logger.info("USE_MOCK=true - loading MockQA backend")
         state.qa = MockQA()
     else:
-        # Lazy import — keeps the FastAPI app importable in environments where
+        # Lazy import - keeps the FastAPI app importable in environments where
         # heavy ML deps aren't installed.
         from src.inference import LogisticsQA
 
@@ -92,7 +92,7 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
 
 
 app = FastAPI(
-    title="Logistics QA — LoRA fine-tuned Qwen 2.5",
+    title="Logistics QA - LoRA fine-tuned Qwen 2.5",
     version="0.1.0",
     lifespan=lifespan,
 )

@@ -1,4 +1,4 @@
-# Logistics QA — QLoRA fine-tuning of Qwen 2.5-1.5B-Instruct
+# Logistics QA - QLoRA fine-tuning of Qwen 2.5-1.5B-Instruct
 
 QLoRA (4-bit NF4) fine-tuning of [Qwen 2.5-1.5B-Instruct](https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct) on a 5,400-example synthetic Q&A dataset covering logistics and supply-chain operations: freight calculations, carrier performance, claims, routing, SOPs, and FMCSA / customs compliance. Includes the dataset generator, training pipeline, evaluation harness, and a FastAPI streaming inference server.
 
@@ -11,7 +11,7 @@ Answer:    "Under 49 CFR 370.3, the claim must be filed in writing with the carr
 
 ## Why this project
 
-While doing logistics-ops analytics during a co-op term, I noticed a recurring pattern: the same regulatory and procedural questions came up over and over — "what's a Carmack-Amendment claim limit?", "what's the DIM factor for LTL?", "what's the difference between C-TPAT and AEO?". Generic LLMs answer these inconsistently because the underlying facts are scattered across CFR text, NMFC tariffs, and trade press. This project tests whether a small LoRA fine-tune on a curated synthetic corpus can move a small (1.5B) model meaningfully closer to expert reliability on domain Q&A.
+While doing logistics-ops analytics during a co-op term, I noticed a recurring pattern: the same regulatory and procedural questions came up over and over - "what's a Carmack-Amendment claim limit?", "what's the DIM factor for LTL?", "what's the difference between C-TPAT and AEO?". Generic LLMs answer these inconsistently because the underlying facts are scattered across CFR text, NMFC tariffs, and trade press. This project tests whether a small LoRA fine-tune on a curated synthetic corpus can move a small (1.5B) model meaningfully closer to expert reliability on domain Q&A.
 
 ## Architecture
 
@@ -55,7 +55,7 @@ Full results are in [`artifacts/results/eval.json`](artifacts/results/eval.json)
 
 ### Per-category breakdown
 
-The aggregate hides the real story — fine-tuning helped meaningfully on the highest-baseline category and barely moved most others:
+The aggregate hides the real story - fine-tuning helped meaningfully on the highest-baseline category and barely moved most others:
 
 | Category                   | Base EM | + QLoRA | Δ        |
 | -------------------------- | ------- | ------- | -------- |
@@ -76,7 +76,7 @@ The numerical wins are modest, but the *content* of fine-tuned answers shifts no
 >
 > **+ QLoRA:** "Salvage refers to the value of damaged goods that can be recovered or reused after loss. Under **49 CFR § 1005.1**, a carrier must notify the shipper within 24 hours of discovering damage and provide written notice of salvage rights…"
 
-The fine-tuned model consistently cites specific regulations (49 CFR), uses industry abbreviations (BOL, POD, SKU, NMFC), and follows the structure of real claims procedures — patterns the base model never picks up. See cell-10 of `notebooks/03_evaluate.ipynb` for the top-improvement examples on the live data.
+The fine-tuned model consistently cites specific regulations (49 CFR), uses industry abbreviations (BOL, POD, SKU, NMFC), and follows the structure of real claims procedures - patterns the base model never picks up. See cell-10 of `notebooks/03_evaluate.ipynb` for the top-improvement examples on the live data.
 
 ### Caveats
 
@@ -86,15 +86,15 @@ The fine-tuned model consistently cites specific regulations (49 CFR), uses indu
 
 ## Setup
 
-### Option A — Google Colab (easiest, free T4)
+### Option A - Google Colab (easiest, free T4)
 
 The three notebooks in `notebooks/` run the full workflow on Colab's free T4. Open each in order:
 
-1. `01_generate_dataset.ipynb` — generate the 5.4K-example dataset (~$5-10 in Anthropic credits, ~6 hours)
-2. `02_train_lora.ipynb` — train the QLoRA adapter (~2-3 hours on T4, resumable across sessions)
-3. `03_evaluate.ipynb` — produce side-by-side metrics and plots
+1. `01_generate_dataset.ipynb` - generate the 5.4K-example dataset (~$5-10 in Anthropic credits, ~6 hours)
+2. `02_train_lora.ipynb` - train the QLoRA adapter (~2-3 hours on T4, resumable across sessions)
+3. `03_evaluate.ipynb` - produce side-by-side metrics and plots
 
-### Option B — Local
+### Option B - Local
 
 ```bash
 git clone https://github.com/<you>/logistics-qa-lora.git
@@ -117,10 +117,10 @@ cp .env.example .env
 ### 1. Generate the dataset
 
 ```bash
-# Smoke test — generates 1 batch per category (~50 examples), verifies the pipeline
+# Smoke test - generates 1 batch per category (~50 examples), verifies the pipeline
 python -m data.prepare_dataset --smoke
 
-# Full run — generates 6K examples and writes train/val/test splits
+# Full run - generates 6K examples and writes train/val/test splits
 python -m data.prepare_dataset --target 6000 --batch-size 8 --split
 ```
 
@@ -136,7 +136,7 @@ python -m src.train --epochs 1 --max-seq-length 512 --save-steps 25 --no-eval --
 python -m src.train --epochs 3 --lr 3e-4 --batch-size 8
 ```
 
-The adapter is saved to `artifacts/checkpoints/final/`. With QLoRA on Qwen 2.5-1.5B, the adapter alone is ~17 MB — small enough to upload to the Hub.
+The adapter is saved to `artifacts/checkpoints/final/`. With QLoRA on Qwen 2.5-1.5B, the adapter alone is ~17 MB - small enough to upload to the Hub.
 
 ### 3. Evaluate
 
@@ -152,7 +152,7 @@ Prints a summary table and writes full per-example predictions to `artifacts/res
 # With the trained adapter
 ADAPTER_PATH=artifacts/checkpoints/final uvicorn server.app:app --port 8000
 
-# Without a model (mock backend — useful for testing the HTTP layer)
+# Without a model (mock backend - useful for testing the HTTP layer)
 USE_MOCK=true uvicorn server.app:app --port 8000
 
 # Or via Docker
@@ -201,7 +201,7 @@ Everything tunable lives in [`src/config.py`](src/config.py). The most-changed k
 | Learning rate         | 2e-4                     | `TRAIN.learning_rate` |
 | Max sequence length   | 1024 (training notebook uses 512 on T4) | `MODEL.max_seq_length` |
 
-To target a different model (Qwen 2.5-7B, Llama-3-8B, Mistral-7B, etc.), change `MODEL.name`. The rest of the pipeline is model-agnostic — any HF causal-LM model with a chat template will work. The 1.5B default was chosen to fit Colab's free T4 quota in one session; on a paid Colab Pro instance or A100, the 7B base produces noticeably better answers.
+To target a different model (Qwen 2.5-7B, Llama-3-8B, Mistral-7B, etc.), change `MODEL.name`. The rest of the pipeline is model-agnostic - any HF causal-LM model with a chat template will work. The 1.5B default was chosen to fit Colab's free T4 quota in one session; on a paid Colab Pro instance or A100, the 7B base produces noticeably better answers.
 
 ## Tests
 
@@ -223,11 +223,11 @@ The `.gitignore` excludes `.env`, all credential file patterns, checkpoint files
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT - see [LICENSE](LICENSE).
 
 ## Acknowledgments
 
-- [Qwen 2.5](https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct) (Alibaba Cloud) — base model
-- [PEFT](https://github.com/huggingface/peft) and [TRL](https://github.com/huggingface/trl) — LoRA + SFT infrastructure
-- [bitsandbytes](https://github.com/TimDettmers/bitsandbytes) — 4-bit quantization
-- [Anthropic Claude](https://www.anthropic.com/claude) — synthetic dataset generation
+- [Qwen 2.5](https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct) (Alibaba Cloud) - base model
+- [PEFT](https://github.com/huggingface/peft) and [TRL](https://github.com/huggingface/trl) - LoRA + SFT infrastructure
+- [bitsandbytes](https://github.com/TimDettmers/bitsandbytes) - 4-bit quantization
+- [Anthropic Claude](https://www.anthropic.com/claude) - synthetic dataset generation

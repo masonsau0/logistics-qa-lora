@@ -24,7 +24,7 @@ from datasets import Dataset, DatasetDict
 
 logger = logging.getLogger(__name__)
 
-# Chat-template role names — Qwen / Llama / Mistral all use the same OpenAI-style
+# Chat-template role names - Qwen / Llama / Mistral all use the same OpenAI-style
 # convention, so this code is portable across models.
 SYSTEM_PROMPT = (
     "You are a logistics and supply-chain operations expert. Answer questions "
@@ -103,7 +103,7 @@ def format_for_sft(example: dict[str, Any], tokenizer) -> dict[str, Any]:
     prompt_ids = tokenizer(prompt_text, add_special_tokens=False)["input_ids"]
 
     labels = list(full_ids)
-    # Mask out everything up to and including the prompt — those tokens don't
+    # Mask out everything up to and including the prompt - those tokens don't
     # contribute to the loss.
     for i in range(min(len(prompt_ids), len(labels))):
         labels[i] = -100
@@ -151,7 +151,7 @@ def tokenize_dataset(dataset, tokenizer, max_length: int):
 
     def _process(example):
         out = format_for_sft(example, tokenizer)
-        # Truncate long examples. We truncate from the *end* — for instruction
+        # Truncate long examples. We truncate from the *end* - for instruction
         # data with short prompts and long answers this could lose the tail of
         # the answer; that's preferable to losing the prompt.
         if len(out["input_ids"]) > max_length:
